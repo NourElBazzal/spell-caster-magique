@@ -15,60 +15,8 @@
 Il utilise la webcam pour détecter la main du joueur en temps réel grâce à **ML5.js HandPose**.  
 Le joueur lance des sorts magiques en positionnant sa main dans différentes zones de l'écran.
 
-Développé dans le cadre du **Mini Projet Master 2 MIAGE IA2** — cours de Michel Buffa  
-**Université Côte d'Azur — Février 2026**
-
----
-
-## Comment jouer
-
-### 1. Prérequis
-
-- Un ordinateur avec une **webcam**
-- Un navigateur moderne (Chrome recommandé)
-- **Autoriser l'accès à la webcam** quand le navigateur le demande
-
-### 2. Démarrage
-
-1. Ouvre le jeu dans ton navigateur
-2. Attends que ML5 charge (2-3 secondes)
-3. Montre ta main à la webcam
-4. Choisis un mode de jeu
-
----
-
-## Les gestes magiques
-
-| Geste               | Action              |
-| ------------------- | ------------------- |
-| ✋ **Main ouverte** | Lance le sort actif |
-| ✊ **Main fermée**  | Désactive le sort   |
-
----
-
-## Les zones de sorts
-
-L'écran est divisé en **4 zones** selon la position de ta main :
-
-# ✨ Spell Caster Magique ✨
-
-> _"La méchante sorcière Malvina a éparpillé les étoiles magiques dans le royaume !  
-> Toi, petit sorcier apprenti, tu dois les attraper avec ta main magique !"_
-
-🎮 **Jouer au jeu** : [spell-caster-magique sur GitHub Pages](https://NourElBazzal.github.io/spell-caster-magique)
-
-📹 **Vidéo de démonstration** : [Voir sur YouTube](#) _(lien à ajouter)_
-
----
-
-## A propos du jeu
-
-**Spell Caster Magique** est un jeu éducatif interactif destiné aux **enfants de 4 à 10 ans**.  
-Il utilise la webcam pour détecter la main du joueur en temps réel grâce à **ML5.js HandPose**.  
-Le joueur lance des sorts magiques en positionnant sa main dans différentes zones de l'écran.
-
-Développé dans le cadre du **Mini Projet Master 2 MIAGE IA2** — cours de Michel Buffa  
-**Université Côte d'Azur — Février 2026**
+Développé dans le cadre du **Mini Projet Master 2 MIAGE IA2** - cours de Michel Buffa  
+**Université Côte d'Azur**
 
 ---
 
@@ -138,10 +86,10 @@ L'écran est divisé en **4 zones** selon la position de ta main :
 
 | Sort               | Zone          | Behavior                                  | Effet visuel      |
 | ------------------ | ------------- | ----------------------------------------- | ----------------- |
-| 🌈 **Arc-en-ciel** | Main en HAUT  | **Seek** — étoiles foncent vers ta main   | Étoiles roses     |
-| ☁️ **Nuage**       | Main en BAS   | **Wander** — étoiles déambulent           | Étoiles bleues    |
-| 🌙 **Lune**        | Main à GAUCHE | **Arrive** — étoiles convergent au centre | Étoiles violettes |
-| ☀️ **Soleil**      | Main à DROITE | **Pursue** — étoiles tourbillonnent       | Étoiles dorées    |
+| 🌈 **Arc-en-ciel** | Main en HAUT  | **Seek** - étoiles foncent vers ta main   | Étoiles roses     |
+| ☁️ **Nuage**       | Main en BAS   | **Wander** - étoiles déambulent           | Étoiles bleues    |
+| 🌙 **Lune**        | Main à GAUCHE | **Arrive** - étoiles convergent au centre | Étoiles violettes |
+| ☀️ **Soleil**      | Main à DROITE | **Pursue** - étoiles tourbillonnent       | Étoiles dorées    |
 
 ---
 
@@ -163,7 +111,7 @@ L'écran est divisé en **4 zones** selon la position de ta main :
   - 🔴 Rouge : moins de 10 secondes
 - Écran de fin avec ton score et un message selon ta performance
 
-### Mode Histoire — 5 Niveaux
+### Mode Histoire - 5 Niveaux
 
 La méchante sorcière Malvina a éparpillé les étoiles dans tout le royaume !
 
@@ -182,20 +130,20 @@ La méchante sorcière Malvina a éparpillé les étoiles dans tout le royaume !
 | Étoile                           | Description                 | Points |
 | -------------------------------- | --------------------------- | ------ |
 | ⭐ **Étoile normale**            | Déambule avec le sort actif | +1     |
-| 🌟 **Étoile spéciale dorée**     | Scintille et pulse — rare ! | +3     |
-| 💀 **Étoile maléfique violette** | Fuit ta main — à éviter !   | -2     |
+| 🌟 **Étoile spéciale dorée**     | Scintille et pulse - rare ! | +3     |
+| 💀 **Étoile maléfique violette** | Fuit ta main - à éviter !   | -2     |
 
 ---
 
-## Le Boss — Malvina le Dragon
+## Le Boss - Malvina le Dragon
 
 Malvina apparaît quand tu atteins **30 points** en mode Libre ou Timer !
 
 **Comportements de Malvina :**
 
-- **Phase Invocation** : utilise le behavior **Wander** — déambule mystérieusement
+- **Phase Invocation** : utilise le behavior **Wander** - déambule mystérieusement
 - **Phase Attaque** : utilise le behavior **Flee** quand tu lances un sort, et **Seek** si tu n'en as pas !
-- **10 points de vie** — touche-la avec ta main ouverte pour la blesser
+- **10 points de vie** - touche-la avec ta main ouverte pour la blesser
 - **+10 points** si tu la vaincs
 - Elle **revient plus forte** (+5 vie) après 10 secondes !
 
@@ -279,7 +227,7 @@ SpellCaster/
 
 ---
 
-## 🎓 Steering Behaviors utilisés
+## Steering Behaviors utilisés
 
 Ce projet implémente les **steering behaviors** vus en cours :
 
@@ -293,7 +241,7 @@ Ce projet implémente les **steering behaviors** vus en cours :
 
 ---
 
-## 🤖 ML5.js — HandPose
+## ML5.js - HandPose
 
 Le jeu utilise **ML5.js v0.6.1** avec le modèle **HandPose** pour :
 
@@ -321,7 +269,7 @@ Nous avons choisi de créer **Spell Caster Magique** car nous voulions faire que
 
 ### Les behaviors choisis
 
-Nous avons choisi d'utiliser **Seek, Flee, Arrive et Wander** car ce sont les plus visuellement expressifs — on voit clairement la différence de comportement entre chaque sort. Le **Flee** sur les étoiles maléfiques et le boss crée une vraie tension de gameplay.
+Nous avons choisi d'utiliser **Seek, Flee, Arrive et Wander** car ce sont les plus visuellement expressifs - on voit clairement la différence de comportement entre chaque sort. Le **Flee** sur les étoiles maléfiques et le boss crée une vraie tension de gameplay.
 
 ### Les difficultés rencontrées
 
@@ -337,9 +285,9 @@ Le miroir horizontal de la webcam rendait les zones gauche/droite inversées. Il
 **4. Sons sans fichiers audio**
 P5.sound n'était pas compatible avec notre version. La solution a été d'utiliser directement la **Web Audio API** du navigateur pour générer les sons programmatiquement.
 
-### Ce que j'ai appris
+### Ce que nous avons appris
 
-- L'intégration de ML5.js avec P5.js n'est pas triviale — les versions sont très importantes
+- L'intégration de ML5.js avec P5.js n'est pas triviale - les versions sont très importantes
 - Les steering behaviors sont très puissants visuellement avec très peu de code
 - La calibration en temps réel (logs des coordonnées) est essentielle
 - Il vaut mieux un projet simple et bien fini qu'un projet ambitieux incomplet
@@ -354,16 +302,16 @@ P5.sound n'était pas compatible avec notre version. La solution a été d'utili
 
 ## Crédits
 
-**Cours** : Steering Behaviors — Master 2 MIAGE IA2  
+**Cours** : Steering Behaviors - Master 2 MIAGE IA2  
 **Professeur** : Michel Buffa  
-**Université** : Université Côte d'Azur — Février 2026
+**Université** : Université Côte d'Azur
 
 ---
 
 ## Références
 
-- [Craig Reynolds — Steering Behaviors (GDC 1999)](https://www.red3d.com/cwr/steer/)
-- [The Nature of Code — Daniel Shiffman](https://natureofcode.com/book/)
+- [Craig Reynolds - Steering Behaviors (GDC 1999)](https://www.scribd.com/doc/289872753/Reviewing-Craig-W-Reynolds-paper-1999)
+- [The Nature of Code - Daniel Shiffman](https://natureofcode.com/book/)
 - [ML5.js Documentation](https://ml5js.org/)
 - [P5.js Reference](https://p5js.org/reference/)
-- [The Coding Train — Steering Behaviors](https://thecodingtrain.com/tracks/the-nature-of-code-2)
+- [The Coding Train - Steering Behaviors](https://thecodingtrain.com/tracks/the-nature-of-code-2)
