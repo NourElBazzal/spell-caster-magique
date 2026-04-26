@@ -318,7 +318,7 @@ function draw() {
     bossIntroTimer = 0;
     boss = new Boss();
     showMessage("👁️ MALVINA APPARAÎT !", width/2, height/2);
-    soundManager.playNote(150, 0, 0.8, 0.4, 'sawtooth');
+    soundManager.playBossAppear();
   }
 
   // Boss
@@ -396,7 +396,7 @@ function draw() {
     bossDefeated = true;
     score += 10; // Bonus victoire !
     showMessage("🏆 MALVINA VAINCUE ! +10 !", width/2, height/2);
-    soundManager.playCollect(true);
+    soundManager.playBossDefeated();
 
     // Explosion de particules
     for (let i = 0; i < 5; i++) {
@@ -654,11 +654,6 @@ function updateSpell() {
     currentSpell = "none";
   }
 
-  // Jouer le son du sort quand il change
-  if (currentSpell !== lastSpell && currentSpell !== "none") {
-   soundManager.playSpell(currentSpell);
-  }
-  lastSpell = currentSpell;
 }
 
 function createCelebration(x, y, col) {
@@ -971,6 +966,9 @@ function startGame(mode) {
 
   gameState = "playing";
   soundManager.ensureAudio();
+
+  // Démarrer la musique de fond
+  soundManager.startBgMusic(mode);
 }
 
 function mousePressed() {
@@ -1014,6 +1012,7 @@ function mousePressed() {
       introTimer = 0;
       currentSpell = "none";
       lastSpell = "none";
+      soundManager.stopBgMusic();
     }
   }
 
