@@ -5,7 +5,7 @@
 
 **Jouer au jeu** : [spell-caster-magique sur GitHub Pages](https://NourElBazzal.github.io/spell-caster-magique)
 
-**Vidéo de démonstration** : [Voir sur YouTube](#)
+**Vidéo de démonstration** : [Voir sur YouTube](https://youtu.be/2w8RvwgcDhA)
 
 ---
 
