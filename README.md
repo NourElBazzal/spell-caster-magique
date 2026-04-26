@@ -281,7 +281,7 @@ Les zones sont calibrées selon les coordonnées réelles de la webcam (640x480)
 
 ### Pourquoi ce jeu ?
 
-Nous avons choisi de créer **Spell Caster Magique** car nous voulions faire quelque chose d'original et d'éducatif pour les enfants. L'idée de contrôler un jeu avec sa main sans toucher d'écran nous semblait magique et accessible pour tous les âges. Nour s'est occupée de la partie ML5.js et des interactions gestuelles, tandis que Ramlat a travaillé sur la partie réseau de neurones.
+Nous avons choisi de créer **Spell Caster Magique** car nous voulions faire quelque chose d'original et d'éducatif pour les enfants. L'idée de contrôler un jeu avec sa main sans toucher d'écran nous semblait magique et accessible pour tous les âges.
 
 ### Les behaviors choisis
 
