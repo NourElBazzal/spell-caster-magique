@@ -218,39 +218,48 @@ class StoryManager {
 
   // Barre de progression des niveaux
   showLevelProgress() {
-    let barY = height - 40;
-    let barW = 300;
-    let barX = width / 2 - barW / 2;
-    let stepW = barW / this.maxLevels;
+    // Barre de progression en haut à droite
+    let barX = width - 180;
+    let barY = 20;
+    let stepW = 30;
 
     noStroke();
+
     for (let i = 0; i < this.maxLevels; i++) {
+      let cx = barX + i * stepW;
+      let cy = barY;
+
+      // Couleur selon état
       if (i < this.currentLevel - 1) {
         fill(255, 220, 100); // complété
       } else if (i === this.currentLevel - 1) {
-        fill(100, 255, 150); // actuel
+        // Pulse pour le niveau actuel
+        let pulse = map(sin(frameCount * 0.1), -1, 1, 150, 255);
+        fill(100, 255, 150, pulse);
       } else {
-        fill(80, 80, 80); // à venir
+        fill(80, 80, 100); // à venir
       }
-      ellipse(barX + i * stepW + stepW / 2, barY, 20, 20);
+
+      ellipse(cx, cy, 18, 18);
 
       fill(255);
-      textSize(10);
-      text(i + 1, barX + i * stepW + stepW / 2, barY + 4);
+      textSize(9);
+      textAlign(CENTER);
+      text(i + 1, cx, cy + 3);
     }
 
     // Ligne entre les points
     for (let i = 0; i < this.maxLevels - 1; i++) {
-      let col = i < this.currentLevel - 1 ? color(255, 220, 100) : color(80, 80, 80);
+      let col = i < this.currentLevel - 1 ?
+        color(255, 220, 100) : color(80, 80, 100);
       stroke(col);
-      strokeWeight(2);
+      strokeWeight(1.5);
       line(
-        barX + i * stepW + stepW / 2 + 11,
-        barY,
-        barX + (i + 1) * stepW + stepW / 2 - 11,
-        barY
+        barX + i * stepW + 10, barY,
+        barX + (i + 1) * stepW - 10, barY
       );
     }
     noStroke();
+    textAlign(CENTER);
   }
 }

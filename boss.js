@@ -57,6 +57,12 @@ class Boss extends Vehicle {
 
     this.applyForce(force);
     super.update();
+
+    // Rester dans la zone magique
+    let m = (typeof MARGIN !== 'undefined') ? MARGIN + 20 : 20;
+    this.pos.x = constrain(this.pos.x, m, width - m);
+    this.pos.y = constrain(this.pos.y, m, height - m);
+
     this.edges();
 
     // Timer de hit

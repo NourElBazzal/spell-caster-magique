@@ -1,5 +1,7 @@
 // Zone de jeu avec marges
-let MARGIN = 120; // marge de chaque côté
+let MARGIN_X = 40; // moins de marge gauche/droite
+let MARGIN_TOP = 70; // un peu moins en haut
+let MARGIN_BOT = 50; // moins en bas
 
 let stars = [];
 let messages = []; 
@@ -90,6 +92,81 @@ function collectStar(i, star) {
   }
 }
 
+function drawMagicFrame() {
+  let mx = MARGIN_X;
+  let mt = MARGIN_TOP;
+  let mb = MARGIN_BOT;
+  let pulse = map(sin(frameCount * 0.05), -1, 1, 0.8, 1);
+  let pulse2 = map(sin(frameCount * 0.03 + 1), -1, 1, 100, 200);
+
+  // Zones sombres sur les bords
+  noStroke();
+  fill(0, 0, 20, 120);
+  rect(0, 0, mx, height);  // gauche
+  rect(width - mx, 0, mx, height);  // droite
+  rect(mx, 0, width - mx * 2, mt); // haut
+  rect(mx, height - mb, width - mx * 2, mb); // bas
+
+  // Bordure magique
+  noFill();
+  stroke(150, 80, 255, 30);
+  strokeWeight(20);
+  rect(mx, mt, width - mx * 2, height - mt - mb, 20);
+
+  stroke(180, 100, 255, 60 * pulse);
+  strokeWeight(8);
+  rect(mx, mt, width - mx * 2, height - mt - mb, 20);
+
+  stroke(220, 150, 255, pulse2);
+  strokeWeight(2);
+  rect(mx, mt, width - mx * 2, height - mt - mb, 20);
+  noStroke();
+
+  // Coins étoilés
+  let corners = [
+    {x: mx, y: mt},
+    {x: width - mx, y: mt},
+    {x: mx, y: height - mb},
+    {x: width - mx, y: height - mb}
+  ];
+
+  for (let c of corners) {
+    fill(200, 150, 255, 40);
+    ellipse(c.x, c.y, 40, 40);
+    fill(220, 180, 255, 200);
+    drawCornerStar(c.x, c.y, 6, 14, 5);
+  }
+
+  // Particules sur la bordure
+  if (frameCount % 3 === 0) {
+    let side = floor(random(4));
+    let px, py;
+    if (side === 0) { px = random(mx, width - mx); py = mt; }
+    else if (side === 1) { px = random(mx, width - mx); py = height - mb; }
+    else if (side === 2) { px = mx; py = random(mt, height - mb); }
+    else { px = width - mx; py = random(mt, height - mb); }
+
+    fill(random([
+      color(255, 100, 200, 150),
+      color(100, 200, 255, 150),
+      color(200, 150, 255, 150),
+      color(255, 220, 100, 150)
+    ]));
+    ellipse(px, py, random(3, 7));
+  }
+}
+
+function drawCornerStar(x, y, r1, r2, npoints) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = -HALF_PI; a < TWO_PI - HALF_PI; a += angle) {
+    vertex(x + cos(a) * r2, y + sin(a) * r2);
+    vertex(x + cos(a + halfAngle) * r1, y + sin(a + halfAngle) * r1);
+  }
+  endShape(CLOSE);
+}
+
 function draw() {
   // Fond
   bg.show();
@@ -107,6 +184,9 @@ function draw() {
     handDetector.showMiniCam();
     return;
   }
+
+  // Cadre magique avant tout le reste
+  drawMagicFrame();
 
   // Déterminer le sort actif
   updateSpell();
@@ -177,6 +257,12 @@ function draw() {
 
   // Zones visuelles
   bg.showZones(handDetector.predictions.length > 0);
+
+  // Masquer ce qui dépasse du cadre
+  drawingContext.save();
+  drawingContext.beginPath();
+  drawingContext.roundRect( MARGIN_X, MARGIN_TOP, width - MARGIN_X * 2, height - MARGIN_TOP - MARGIN_BOT, 20);
+  drawingContext.clip();
 
   // Étoiles
   for (let i = stars.length - 1; i >= 0; i--) {
@@ -341,6 +427,8 @@ function draw() {
     if (particles[i].isDead()) particles.splice(i, 1);
   }
 
+  drawingContext.restore();
+
   // Sorcier
   if (handDetector.predictions.length > 0) {
     wizard.update(handDetector.handPos, currentSpell);
@@ -349,11 +437,8 @@ function draw() {
 
   // Effets sort
   drawSpellEffect();
-
   handDetector.showMiniCam();
-  
   drawMessages();
-
   // UI
   drawUI();
 
@@ -436,7 +521,7 @@ function drawRulesPopup() {
   text("🐉 Attention au Dragon Malvina !", width / 2, popY + 130);
   fill(200, 180, 255, 180);
   textSize(12);
-  text("Apparaît à 30pts — touche-la pour +10pts !", width / 2, popY + 148);
+  text("Apparaît à 30pts touche-la pour +10pts !", width / 2, popY + 148);
 
   // Règle 3
   fill(100, 255, 150);
@@ -698,7 +783,7 @@ function drawUI() {
     fill(200, 180, 255);
     textSize(14);
     textAlign(LEFT);
-    text(`Niveau ${storyManager.currentLevel}/5`, 15, 30);
+    text(`Niveau ${storyManager.currentLevel}/5`, 120, 32);
 
     // Barre de progression niveau
     storyManager.showLevelProgress();
@@ -733,14 +818,6 @@ function drawUI() {
     text("👁️ Touche Malvina avec ta main !", width - 15, height - 15);
   }
 
-  // Message apparition boss
-  if (!bossAppeared && gameMode !== "histoire") {
-    fill(200, 100, 255, 100);
-    textSize(12);
-    textAlign(RIGHT);
-    text(`👁️ Malvina apparaît à 30 ⭐ (${score}/30)`, width - 15, height - 15);
-  }
-
   // Instructions si pas de main
   if (handDetector.isReady && handDetector.predictions.length === 0) {
     fill(200, 200, 255, 180);
@@ -754,30 +831,30 @@ function drawUI() {
     text("✋ Ouvre la main pour lancer un sort !", width / 2, height - 20);
   }
 
-  // Bouton Menu  Violet magique
-  let btnHover = mouseX > 10 && mouseX < 110 &&  mouseY > height - 45 && mouseY < height - 10;
+  // Bouton Menu en haut à gauche
+  let btnHover = mouseX > 10 && mouseX < 110 && mouseY > 10 && mouseY < 45;
 
-  // Lueur derrière
+  // Lueur
   noStroke();
   fill(150, 50, 255, 40);
-  rect(8, height - 47, 104, 39, 10);
+  rect(8, 8, 104, 39, 10);
 
-  // Corps du bouton
+  // Corps
   fill(btnHover ? color(160, 80, 255) : color(100, 30, 180, 220));
-  rect(10, height - 45, 100, 35, 8);
+  rect(10, 10, 100, 35, 8);
 
-  // Bordure brillante
+  // Bordure
   stroke(200, 150, 255, 180);
   strokeWeight(1);
   noFill();
-  rect(10, height - 45, 100, 35, 8);
+  rect(10, 10, 100, 35, 8);
   noStroke();
 
   // Texte
   fill(255, 220, 255);
   textSize(13);
   textAlign(LEFT);
-  text("🏠 Menu", 20, height - 22);
+  text("🏠 Menu", 20, 32);
 
 }
 
@@ -932,7 +1009,7 @@ function mousePressed() {
 
   // Bouton Menu pendant le jeu
   if (gameState === "playing") {
-    if (mouseX > 10 && mouseX < 110 && mouseY > height - 45 && mouseY < height - 10) {
+    if (mouseX > 10 && mouseX < 110 && mouseY > 10 && mouseY < 45) {
       gameState = "intro";
       introTimer = 0;
       currentSpell = "none";

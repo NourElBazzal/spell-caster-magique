@@ -78,11 +78,18 @@ class Vehicle {
     this.acc.mult(0);
   }
 
-  // Rester dans les bords de l'écran
   edges() {
-    if (this.pos.x > width + this.r)  this.pos.x = -this.r;
-    if (this.pos.x < -this.r) this.pos.x = width + this.r;
-    if (this.pos.y > height + this.r) this.pos.y = -this.r;
-    if (this.pos.y < -this.r) this.pos.y = height + this.r;
+    let mx = (typeof MARGIN_X !== 'undefined') ? MARGIN_X : 0;
+    let mt = (typeof MARGIN_TOP !== 'undefined') ? MARGIN_TOP : 0;
+    let mb = (typeof MARGIN_BOT !== 'undefined') ? MARGIN_BOT : 0;
+
+    if (this.pos.x > width - mx) 
+      this.pos.x = mx;
+    if (this.pos.x < mx) 
+      this.pos.x = width - mx;
+    if (this.pos.y > height - mb) 
+      this.pos.y = mt;
+    if (this.pos.y < mt)
+      this.pos.y = height - mb;
   }
 }
