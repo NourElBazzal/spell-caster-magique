@@ -1,3 +1,6 @@
+// Zone de jeu avec marges
+let MARGIN = 120; // marge de chaque côté
+
 let stars = [];
 let messages = []; 
 let handDetector;
@@ -15,6 +18,9 @@ let wizard;
 let gameState = "intro"; // "intro" ou "playing"
 let introAlpha = 255;
 let introTimer = 0;
+
+let showRulesPopup = false;
+let pendingGameMode = "libre";
 
 // Mode jeu
 let gameMode = "libre"; // "libre" ou "timer"
@@ -90,6 +96,9 @@ function draw() {
 
   if (gameState === "intro") {
     drawIntro();
+    if (showRulesPopup) {
+      drawRulesPopup();
+    }
     return;
   }
 
@@ -350,6 +359,130 @@ function draw() {
 
 }
 
+function drawRulesPopup() {
+  // Fond féerique animé
+  background(8, 8, 35);
+
+  // Étoiles scintillantes derrière le popup
+  for (let i = 0; i < 80; i++) {
+    let x = noise(i * 0.5, frameCount * 0.005) * width;
+    let y = noise(i * 0.5 + 100, frameCount * 0.005) * height;
+    let alpha = map(sin(frameCount * 0.05 + i), -1, 1, 50, 200);
+    let size = random(1, 3);
+    noStroke();
+    fill(255, 255, 255, alpha);
+    ellipse(x, y, size);
+  }
+
+  // Particules magiques colorées
+  for (let i = 0; i < 5; i++) {
+    let px = random(width);
+    let py = random(height);
+    let cols = [
+      color(255, 100, 200, 80),
+      color(100, 200, 255, 80),
+      color(200, 200, 255, 80),
+      color(255, 220, 100, 80)
+    ];
+    fill(cols[floor(random(cols.length))]);
+    ellipse(px, py, random(3, 8));
+  }
+
+  let popW = 520;
+  let popH = 340;
+  let popX = width / 2 - popW / 2;
+  let popY = height / 2 - popH / 2;
+
+  // Ombre
+  fill(0, 0, 0, 100);
+  rect(popX + 8, popY + 8, popW, popH, 20);
+
+  // Corps popup
+  fill(20, 10, 40);
+  rect(popX, popY, popW, popH, 20);
+
+  // Bordure animée dorée
+  let pulse = map(sin(frameCount * 0.08), -1, 1, 150, 255);
+  stroke(200, 150, 255, pulse);
+  strokeWeight(2);
+  noFill();
+  rect(popX, popY, popW, popH, 20);
+  noStroke();
+
+  textAlign(CENTER);
+  noStroke();
+
+  // Titre
+  fill(200, 150, 255);
+  textSize(28);
+  text("🪄 Avant de commencer !", width / 2, popY + 45);
+
+  // Séparateur
+  stroke(200, 150, 255, 80);
+  line(popX + 30, popY + 58, popX + popW - 30, popY + 58);
+  noStroke();
+
+  // Règle 1
+  fill(180, 50, 255);
+  textSize(15);
+  text("💀 Évite les étoiles violettes !", width / 2, popY + 85);
+  fill(200, 180, 255, 180);
+  textSize(12);
+  text("Si tu les attrapes → -2 points !", width / 2, popY + 103);
+
+  // Règle 2
+  fill(255, 150, 0);
+  textSize(15);
+  text("🐉 Attention au Dragon Malvina !", width / 2, popY + 130);
+  fill(200, 180, 255, 180);
+  textSize(12);
+  text("Apparaît à 30pts — touche-la pour +10pts !", width / 2, popY + 148);
+
+  // Règle 3
+  fill(100, 255, 150);
+  textSize(15);
+  text("✋ Main ouverte = Sort actif", width / 2, popY + 175);
+  fill(200, 180, 255, 180);
+  textSize(12);
+  text("Main fermée = Sort inactif", width / 2, popY + 193);
+
+  // Règle 4
+  fill(255, 220, 100);
+  textSize(15);
+  text("🌈 4 sorts selon la position de ta main", width / 2, popY + 220);
+  fill(200, 180, 255, 180);
+  textSize(12);
+  text("HAUT → Arc-en-ciel  |  BAS → Nuage", width / 2, popY + 238);
+  text("GAUCHE → Lune  |  DROITE → Soleil", width / 2, popY + 253);
+
+  // Bouton J'ai compris
+  let btnX = width / 2 - 100;
+  let btnY = popY + popH - 65;
+  let btnW = 200;
+  let btnH = 45;
+
+  let btnHover = mouseX > btnX && mouseX < btnX + btnW &&  mouseY > btnY && mouseY < btnY + btnH;
+
+  // Lueur bouton
+  fill(150, 50, 255, 40);
+  rect(btnX - 2, btnY - 2, btnW + 4, btnH + 4, 14);
+
+  // Corps bouton
+  fill(btnHover ? color(160, 80, 255) : color(100, 30, 180));
+  rect(btnX, btnY, btnW, btnH, 12);
+
+  // Bordure bouton
+  stroke(200, 150, 255, 180);
+  strokeWeight(1);
+  noFill();
+  rect(btnX, btnY, btnW, btnH, 12);
+  noStroke();
+
+  fill(255, 220, 255);
+  textSize(18);
+  text("J'ai compris !", width / 2, btnY + 30);
+}
+
 function drawIntro() {
   introTimer++;
 
@@ -375,7 +508,7 @@ function drawIntro() {
   // Instructions sorts
   fill(150, 200, 255, 200);
   textSize(16);
-  text("✋ Main HAUT      → 🌈 Sort Arc-en-ciel", width / 2, height / 2 - 40);
+  text("       ✋ Main HAUT   → 🌈 Sort Arc-en-ciel", width / 2, height / 2 - 40);
   text("✋ Main BAS       → ☁️  Sort Nuage", width / 2, height / 2 - 12);
   text("✋ Main GAUCHE → 🌙 Sort Lune", width / 2, height / 2 + 16);
   text("✋ Main DROITE  → ☀️  Sort Soleil", width / 2, height / 2 + 44);
@@ -399,7 +532,7 @@ function drawIntro() {
   textSize(18);
   text("⏱️ Mode Timer", width/2 + 100, height/2 + 97);
 
-  // Mode Histoire — centré en dessous
+  // Mode Histoire  centré en dessous
   let histoireHover = mouseX > width/2 - 90 && mouseX < width/2 + 90 &&  mouseY > height/2 + 125 && mouseY < height/2 + 165;
   fill(histoireHover ? color(150, 255, 150) : color(50, 130, 50));
   rect(width/2 - 90, height/2 + 125, 180, 40, 10);
@@ -407,15 +540,16 @@ function drawIntro() {
   textSize(18);
   text("📖 Mode Histoire", width/2, height/2 + 152);
 
-  // Instruction démarrer — bien en dessous
+  // Instruction démarrer  bien en dessous
   let pulse = map(sin(frameCount * 0.05), -1, 1, 150, 255);
   fill(100, 255, 150, pulse);
   textSize(16);
   text("👆 Clique sur un mode ou montre ta main !", width / 2, height / 2 + 195);
 
   // Démarrer en mode libre si main détectée
-  if (handDetector.predictions.length > 0 && introTimer > 60) {
-    startGame("libre");
+  if (handDetector.predictions.length > 0 && introTimer > 60 && !showRulesPopup) {
+    pendingGameMode = "libre";
+    showRulesPopup = true;
   }
 }
 
@@ -585,11 +719,11 @@ function drawUI() {
     text(spellNames[currentSpell], width / 2, height - 20);
   }
 
-  // Avertissement étoiles maléfiques
+  /*Avertissement étoiles maléfiques
   fill(180, 50, 255, 150);
   textSize(13);
   textAlign(LEFT);
-  text("💀 Évite les étoiles violettes ! (-2)", 15, height - 15);
+  text("💀 Évite les étoiles violettes ! (-2)", 15, height - 15);*/
 
   // Indicateur boss
   if (boss && boss.isAlive && bossAppeared) {
@@ -620,7 +754,7 @@ function drawUI() {
     text("✋ Ouvre la main pour lancer un sort !", width / 2, height - 20);
   }
 
-  // Bouton Menu — Violet magique
+  // Bouton Menu  Violet magique
   let btnHover = mouseX > 10 && mouseX < 110 &&  mouseY > height - 45 && mouseY < height - 10;
 
   // Lueur derrière
@@ -763,28 +897,42 @@ function startGame(mode) {
 }
 
 function mousePressed() {
+  // Popup règles  priorité absolue
+  if (showRulesPopup) {
+    let popH = 340;
+    let popY = height / 2 - popH / 2;
+    let btnX = width / 2 - 100;
+    let btnY = popY + popH - 65;
+    let btnW = 200;
+    let btnH = 45;
+    if (mouseX > btnX && mouseX < btnX + btnW && mouseY > btnY && mouseY < btnY + btnH) {
+      showRulesPopup = false;
+      startGame(pendingGameMode);
+    }
+    return;
+  }
+
   if (gameState === "intro") {
     // Mode Libre
-    if (mouseX > width/2 - 180 && mouseX < width/2 - 20 &&
-        mouseY > height/2 + 70 && mouseY < height/2 + 110) {
-      startGame("libre");
+    if (mouseX > width/2 - 180 && mouseX < width/2 - 20 && mouseY > height/2 + 70 && mouseY < height/2 + 110) {
+      pendingGameMode = "libre";
+      showRulesPopup = true;
     }
     // Mode Timer
-    if (mouseX > width/2 + 20 && mouseX < width/2 + 180 &&
-        mouseY > height/2 + 70 && mouseY < height/2 + 110) {
-      startGame("timer");
+    if (mouseX > width/2 + 20 && mouseX < width/2 + 180 && mouseY > height/2 + 70 && mouseY < height/2 + 110) {
+      pendingGameMode = "timer";
+      showRulesPopup = true;
     }
     // Mode Histoire
-    if (mouseX > width/2 - 90 && mouseX < width/2 + 90 &&
-        mouseY > height/2 + 125 && mouseY < height/2 + 165) {
-      startGame("histoire");
+    if (mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > height/2 + 125 && mouseY < height/2 + 165) {
+      pendingGameMode = "histoire";
+      showRulesPopup = true;
     }
   }
 
   // Bouton Menu pendant le jeu
   if (gameState === "playing") {
-    if (mouseX > 10 && mouseX < 110 &&
-        mouseY > height - 45 && mouseY < height - 10) {
+    if (mouseX > 10 && mouseX < 110 && mouseY > height - 45 && mouseY < height - 10) {
       gameState = "intro";
       introTimer = 0;
       currentSpell = "none";
@@ -797,7 +945,6 @@ function mousePressed() {
     gameState = "intro";
     introTimer = 0;
   }
-  
 }
 
 function drawGameOver() {
