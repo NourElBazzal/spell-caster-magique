@@ -5,7 +5,7 @@
 
 **Jouer au jeu** : [spell-caster-magique sur GitHub Pages](https://NourElBazzal.github.io/spell-caster-magique)
 
-**Vidéo de démonstration** : [Voir sur YouTube](#) _()_
+**Vidéo de démonstration** : [Voir sur YouTube](#)
 
 ---
 
@@ -32,8 +32,13 @@ Développé dans le cadre du **Mini Projet Master 2 MIAGE IA2** - cours de Miche
 
 1. Ouvre le jeu dans ton navigateur
 2. Attends que ML5 charge (2-3 secondes)
-3. Montre ta main à la webcam
-4. Choisis un mode de jeu
+3. Montre ta main à la webcam ou clique sur un mode
+4. Lis les règles dans le popup puis clique "J'ai compris !"
+5. Joue !
+
+### 3. Quitter un mode
+
+Clique sur le bouton **Menu** en haut à gauche pour revenir au menu principal à tout moment.
 
 ---
 
@@ -50,37 +55,32 @@ Développé dans le cadre du **Mini Projet Master 2 MIAGE IA2** - cours de Miche
 
 L'écran est divisé en **4 zones** selon la position de ta main :
 
-```
-        ┌─────────────────────────────────────┐
-        │                                     │
-        │        🌈 Sort Arc-en-ciel          │
-        │   Main en HAUT de l'écran           │
-        │   → Behavior : SEEK                 │
-        │   → Les étoiles foncent vers ta main│
-        │                                     │
-        ├──────────────────┬──────────────────┤
-        │                  │                  │
-        │  🌙 Sort Lune    │  ☀️ Sort Soleil  │
-        │  Main à GAUCHE   │  Main à DROITE   │
-        │  → Behavior :    │  → Behavior :    │
-        │    ARRIVE        │    PURSUE        │
-        │  → Étoiles       │  → Étoiles       │
-        │    convergent    │    tourbillonnent │
-        │    au centre     │    autour        │
-        │                  │                  │
-        ├──────────────────┴──────────────────┤
-        │                                     │
-        │          ☁️ Sort Nuage              │
-        │    Main en BAS de l'écran           │
-        │    → Behavior : WANDER              │
-        │    → Les étoiles déambulent         │
-        │      paisiblement                   │
-        │                                     │
-        └─────────────────────────────────────┘
-
-💡 Main OUVERTE ✋ → Sort actif !
-💡 Main FERMÉE  ✊ → Sort inactif
-```
+    ┌─────────────────────────────────────┐
+    │                                     │
+    │        🌈 Sort Arc-en-ciel          │
+    │   Main en HAUT de l'écran           │
+    │   → Behavior : SEEK                 │
+    │   → Les étoiles foncent vers ta main│
+    │                                     │
+    ├──────────────────┬──────────────────┤
+    │                  │                  │
+    │  🌙 Sort Lune    │  ☀️ Sort Soleil  │
+    │  Main à GAUCHE   │  Main à DROITE   │
+    │  → Behavior :    │  → Behavior :    │
+    │    ARRIVE        │    PURSUE        │
+    │  → Étoiles       │  → Étoiles       │
+    │    convergent    │    tourbillonnent │
+    │    au centre     │    autour        │
+    │                  │                  │
+    ├──────────────────┴──────────────────┤
+    │                                     │
+    │          ☁️ Sort Nuage              │
+    │    Main en BAS de l'écran           │
+    │    → Behavior : WANDER              │
+    │    → Les étoiles déambulent         │
+    │      paisiblement                   │
+    │                                     │
+    └─────────────────────────────────────┘
 
 ### Détails des sorts
 
@@ -101,19 +101,22 @@ L'écran est divisé en **4 zones** selon la position de ta main :
 - Collecte un maximum d'étoiles
 - Parfait pour apprendre les sorts
 - Le boss Malvina apparaît à **30 points** !
+- Musique : _fairy-tale.mp3_
 
 ### Mode Timer
 
 - **60 secondes** pour collecter un maximum d'étoiles
 - Le timer change de couleur selon le temps restant :
-  - 🟢 Vert : plus de 30 secondes
-  - 🟠 Orange : entre 10 et 30 secondes
-  - 🔴 Rouge : moins de 10 secondes
+  - Vert : plus de 30 secondes
+  - Orange : entre 10 et 30 secondes
+  - Rouge : moins de 10 secondes
 - Écran de fin avec ton score et un message selon ta performance
+- Musique : _fairy-tale.mp3_
 
 ### Mode Histoire - 5 Niveaux
 
 La méchante sorcière Malvina a éparpillé les étoiles dans tout le royaume !
+Musique : _magical-wizard-fantasy.mp3_
 
 | Niveau | Titre                     | Étoiles | Obstacles | Temps |
 | ------ | ------------------------- | ------- | --------- | ----- |
@@ -155,28 +158,34 @@ Malvina apparaît quand tu atteins **30 points** en mode Libre ou Timer !
 
 - **Score** en haut au centre
 - **Meilleur score** juste en dessous
+- **Bouton Menu** en haut à gauche pour revenir au menu
+- **Cadre magique violet** qui délimite la zone de jeu
 - **Sorcier animé** qui suit ta main
 - **Messages encourageants** qui flottent
-- **Mini caméra** en bas à droite avec squelette de la main
+- **Mini caméra LIVE** en bas à droite avec squelette de la main
 - **Nom du sort actif** en bas au centre
-- **Avertissement** étoiles maléfiques en bas à gauche
 
 ### Indicateur de main
 
-- 🟢 **Squelette vert** = main ouverte → sort actif
-- 🔴 **Squelette rouge** = main fermée → sort inactif
+- Squelette **vert** = main ouverte → sort actif
+- Squelette **rouge** = main fermée → sort inactif
+
+### Popup de règles
+
+Avant chaque partie, un popup s'affiche avec les règles essentielles. Le joueur doit cliquer sur **"J'ai compris !"** pour commencer.
 
 ---
 
 ## Technologies utilisées
 
-| Technologie        | Usage                             |
-| ------------------ | --------------------------------- |
-| **P5.js** v1.9.0   | Moteur graphique et animations    |
-| **ML5.js** v0.6.1  | Détection de la main (HandPose)   |
-| **Web Audio API**  | Sons magiques sans fichiers audio |
-| **JavaScript ES6** | Logique du jeu                    |
-| **HTML5 / CSS3**   | Structure de la page              |
+| Technologie        | Usage                                         |
+| ------------------ | --------------------------------------------- |
+| **P5.js** v1.9.0   | Moteur graphique et animations                |
+| **ML5.js** v0.6.1  | Détection de la main (HandPose)               |
+| **Web Audio API**  | Sons de collection et effets sonores          |
+| **HTML5 Audio**    | Musiques de fond (fairy-tale, wizard-fantasy) |
+| **JavaScript ES6** | Logique du jeu                                |
+| **HTML5 / CSS3**   | Structure de la page                          |
 
 ---
 
@@ -185,44 +194,47 @@ Malvina apparaît quand tu atteins **30 points** en mode Libre ou Timer !
 ```
 SpellCaster/
 │
-├── index.html           # Point d'entrée du jeu
+├── index.html                    # Point d'entrée du jeu
 │
-├── sketch.js            # Boucle principale P5.js
-│                        # Gestion des modes, score, timer
+├── sketch.js                     # Boucle principale P5.js
+│                                 # Gestion des modes, score, timer
 │
-├── vehicle.js           # Classe de BASE
-│                        # Contient : seek, flee, arrive, wander
-│                        # Tous les objets animés en héritent
+├── vehicle.js                    # Classe de BASE
+│                                 # Contient : seek, flee, arrive, wander
+│                                 # Tous les objets animés en héritent
 │
-├── star.js              # Étoiles magiques
-│                        # Sous-classe de Vehicle
-│                        # Réagit aux sorts (seek/flee/arrive/wander)
+├── star.js                       # Étoiles magiques
+│                                 # Sous-classe de Vehicle
+│                                 # Réagit aux sorts (seek/flee/arrive/wander)
 │
-├── badStar.js           # Étoiles maléfiques
-│                        # Sous-classe de Vehicle
-│                        # Behavior : flee (fuit la main)
+├── badStar.js                    # Étoiles maléfiques
+│                                 # Sous-classe de Vehicle
+│                                 # Behavior : flee (fuit la main)
 │
-├── boss.js              # Boss Malvina le Dragon
-│                        # Sous-classe de Vehicle
-│                        # Behaviors : wander + flee + seek
+├── boss.js                       # Boss Malvina le Dragon
+│                                 # Sous-classe de Vehicle
+│                                 # Behaviors : wander + flee + seek
 │
-├── particle.js          # Particules de célébration
-│                        # Effet visuel quand étoile collectée
+├── particle.js                   # Particules de célébration
+│                                 # Effet visuel quand étoile collectée
 │
-├── background.js        # Fond étoilé animé
-│                        # Zones visuelles des sorts
+├── background.js                 # Fond étoilé animé
+│                                 # Zones visuelles des sorts
 │
-├── wizard.js            # Personnage sorcier animé
-│                        # Suit la main du joueur
+├── wizard.js                     # Personnage sorcier animé
+│                                 # Suit la main du joueur
 │
-├── storyManager.js      # Gestion du Mode Histoire
-│                        # 5 niveaux avec scénario
+├── storyManager.js               # Gestion du Mode Histoire
+│                                 # 5 niveaux avec scénario
 │
-├── handDetector.js      # ML5.js HandPose
-│                        # Détection main, zones, doigts
+├── handDetector.js               # ML5.js HandPose
+│                                 # Détection main, zones, doigts
 │
-└── soundManager.js      # Sons via Web Audio API
-                         # Sons différents par sort
+└── soundManager.js               # Sons via Web Audio API
+│                                 # Sons différents par sort
+│
+├── fairy-tale.mp3                # Musique modes Libre et Timer
+└── magical-wizard-fantasy.mp3    # Musique Mode Histoire
 ```
 
 ---
@@ -248,7 +260,7 @@ Le jeu utilise **ML5.js v0.6.1** avec le modèle **HandPose** pour :
 - Détecter la **position de la main** en temps réel
 - Détecter si la main est **ouverte ou fermée** (comptage des doigts)
 - Déterminer la **zone** (haut/bas/gauche/droite)
-- Afficher le **squelette** de la main (21 landmarks)
+- Afficher le **squelette** de la main (21 landmarks) dans la mini caméra
 
 ### Calibration des zones
 
@@ -265,7 +277,7 @@ Les zones sont calibrées selon les coordonnées réelles de la webcam (640x480)
 
 ### Pourquoi ce jeu ?
 
-Nous avons choisi de créer **Spell Caster Magique** car nous voulions faire quelque chose d'original et d'éducatif pour les enfants. L'idée de contrôler un jeu avec sa main sans toucher d'écran nous semblait magique et accessible pour tous les âges.
+Nous avons choisi de créer **Spell Caster Magique** car nous voulions faire quelque chose d'original et d'éducatif pour les enfants. L'idée de contrôler un jeu avec sa main sans toucher d'écran nous semblait magique et accessible pour tous les âges. Nour s'est occupée de la partie ML5.js et des interactions gestuelles, tandis que Ramlat a travaillé sur la partie réseau de neurones.
 
 ### Les behaviors choisis
 
@@ -283,7 +295,10 @@ Les coordonnées retournées par ML5 ne correspondaient pas aux dimensions atten
 Le miroir horizontal de la webcam rendait les zones gauche/droite inversées. Il a fallu inverser le mapping pour que le mouvement à l'écran corresponde au mouvement naturel de la main.
 
 **4. Sons sans fichiers audio**
-P5.sound n'était pas compatible avec notre version. La solution a été d'utiliser directement la **Web Audio API** du navigateur pour générer les sons programmatiquement.
+P5.sound n'était pas compatible avec notre version. La solution a été d'utiliser directement la **Web Audio API** du navigateur pour générer les sons programmatiquement, et l'API HTML5 Audio pour les musiques de fond.
+
+**5. Décalage des coordonnées de la souris**
+Le CSS `display: flex` sur le body décalait le canvas, rendant les clics sur les boutons inopérants. La solution a été de positionner le canvas en `fixed` avec `top: 0; left: 0`.
 
 ### Ce que nous avons appris
 
@@ -297,11 +312,14 @@ P5.sound n'était pas compatible avec notre version. La solution a été d'utili
 - **IDE** : Visual Studio Code + extension Live Server
 - **IA** : Claude (Anthropic) pour l'aide au développement
 - **Debug** : Console Chrome DevTools
+- **Musiques** : Pixabay (libre de droits)
 
 ---
 
 ## Crédits
 
+**Développé par** : Nour El Bazzal  
+**Binôme** : Ramlat _(partie réseau de neurones)_  
 **Cours** : Steering Behaviors - Master 2 MIAGE IA2  
 **Professeur** : Michel Buffa  
 **Université** : Université Côte d'Azur
@@ -315,3 +333,4 @@ P5.sound n'était pas compatible avec notre version. La solution a été d'utili
 - [ML5.js Documentation](https://ml5js.org/)
 - [P5.js Reference](https://p5js.org/reference/)
 - [The Coding Train - Steering Behaviors](https://thecodingtrain.com/tracks/the-nature-of-code-2)
+- [Pixabay - Musiques libres de droits](https://pixabay.com/music/)
