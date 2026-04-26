@@ -316,16 +316,6 @@ Le CSS `display: flex` sur le body décalait le canvas, rendant les clics sur le
 
 ---
 
-## Crédits
-
-**Développé par** : Nour El Bazzal  
-**Binôme** : Ramlat _(partie réseau de neurones)_  
-**Cours** : Steering Behaviors - Master 2 MIAGE IA2  
-**Professeur** : Michel Buffa  
-**Université** : Université Côte d'Azur
-
----
-
 ## Références
 
 - [Craig Reynolds - Steering Behaviors (GDC 1999)](https://www.scribd.com/doc/289872753/Reviewing-Craig-W-Reynolds-paper-1999)
