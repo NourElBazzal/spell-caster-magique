@@ -91,9 +91,14 @@ class SoundManager {
   startBgMusic(mode) {
     this.stopBgMusic();
 
-    let musicFile = mode === "histoire" ?
-      "magical-wizard-fantasy.mp3" :
-      "fairy-tale.mp3";
+    let musicFile;
+    if (mode === "histoire") {
+      musicFile = "magical-wizard-fantasy.mp3";
+    } else if (mode === "timer") {
+      musicFile = "hurry-up-happy-music.mp3";
+    } else {
+      musicFile = "fairy-tale.mp3";
+    }
 
     console.log("Chargement:", musicFile);
 
