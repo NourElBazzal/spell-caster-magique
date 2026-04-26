@@ -8,7 +8,7 @@ class Vehicle {
     this.r = 6; // rayon du véhicule
   }
 
-  // Comportement SEEK — chercher une cible
+  // Comportement SEEK  chercher une cible
   seek(target) {
     let desired = p5.Vector.sub(target, this.pos);
     desired.setMag(this.maxSpeed);
@@ -17,14 +17,14 @@ class Vehicle {
     return steer;
   }
 
-  // Comportement FLEE — fuir une cible
+  // Comportement FLEE  fuir une cible
   flee(target) {
     let f = this.seek(target);
     f.mult(-1);
     return f;
   }
 
-  // Comportement ARRIVE — arriver doucement
+  // Comportement ARRIVE  arriver doucement
   arrive(target) {
     let desired = p5.Vector.sub(target, this.pos);
     let d = desired.mag();
@@ -42,7 +42,7 @@ class Vehicle {
     return steer;
   }
 
-  // Comportement WANDER — déambuler aléatoirement
+  // Comportement WANDER  déambuler aléatoirement
   wander() {
     let wanderR = 50;
     let wanderD = 80;
@@ -81,8 +81,8 @@ class Vehicle {
   // Rester dans les bords de l'écran
   edges() {
     if (this.pos.x > width + this.r)  this.pos.x = -this.r;
-    if (this.pos.x < -this.r)         this.pos.x = width + this.r;
+    if (this.pos.x < -this.r) this.pos.x = width + this.r;
     if (this.pos.y > height + this.r) this.pos.y = -this.r;
-    if (this.pos.y < -this.r)         this.pos.y = height + this.r;
+    if (this.pos.y < -this.r) this.pos.y = height + this.r;
   }
 }

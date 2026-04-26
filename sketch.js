@@ -619,6 +619,32 @@ function drawUI() {
     textAlign(CENTER);
     text("✋ Ouvre la main pour lancer un sort !", width / 2, height - 20);
   }
+
+  // Bouton Menu — Violet magique
+  let btnHover = mouseX > 10 && mouseX < 110 &&  mouseY > height - 45 && mouseY < height - 10;
+
+  // Lueur derrière
+  noStroke();
+  fill(150, 50, 255, 40);
+  rect(8, height - 47, 104, 39, 10);
+
+  // Corps du bouton
+  fill(btnHover ? color(160, 80, 255) : color(100, 30, 180, 220));
+  rect(10, height - 45, 100, 35, 8);
+
+  // Bordure brillante
+  stroke(200, 150, 255, 180);
+  strokeWeight(1);
+  noFill();
+  rect(10, height - 45, 100, 35, 8);
+  noStroke();
+
+  // Texte
+  fill(255, 220, 255);
+  textSize(13);
+  textAlign(LEFT);
+  text("🏠 Menu", 20, height - 22);
+
 }
 
 function windowResized() {
@@ -755,11 +781,23 @@ function mousePressed() {
     }
   }
 
+  // Bouton Menu pendant le jeu
+  if (gameState === "playing") {
+    if (mouseX > 10 && mouseX < 110 &&
+        mouseY > height - 45 && mouseY < height - 10) {
+      gameState = "intro";
+      introTimer = 0;
+      currentSpell = "none";
+      lastSpell = "none";
+    }
+  }
+
   // Rejouer depuis game over
   if (gameState === "gameover") {
     gameState = "intro";
     introTimer = 0;
   }
+  
 }
 
 function drawGameOver() {
@@ -807,3 +845,4 @@ function drawGameOver() {
   textSize(24);
   text("👆 Clique pour rejouer !", width / 2, height / 2 + 130);
 }
+
